@@ -24,25 +24,9 @@ export class BudgetComponent {
 
     bugetService = inject(BudgetsService);
     budget$: Observable<Budget[]> = this.bugetService.getBudgets();
-    isEdit = false;
-    editBudget!: Budget;
     constructor(private confirmationService: ConfirmationService, private messageService: MessageService) {}
-  
-    visible = false;
+    
 
-    showDialog() {
-      this.visible = true;
-  }
-    handleChange(val: boolean){
-      this.visible = val;
-    }
-  
-
-    openEditExpense(expense: Budget) {
-      this.isEdit = true;
-      this.editBudget = expense;
-      this.showDialog();
-    }
     confirmDelete(event: Event, docId: string) {
       this.confirmationService.confirm({
           target: event.target as EventTarget,
