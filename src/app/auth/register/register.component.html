@@ -1,0 +1,41 @@
+<div class="flex w-full h-full items-center justify-center">
+
+<div class="register-container max-w-2xl w-full ">
+    <h2>Register</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  
+      <div>
+        <label for="email">Email</label>
+        <input id="email" type="email" formControlName="email" />
+        <div *ngIf="submitted && f['email'].errors">
+          <small *ngIf="f['email'].errors['required']">Email is required.</small>
+          <small *ngIf="f['email'].errors['email']">Invalid email format.</small>
+        </div>
+      </div>
+  
+      <div>
+        <label for="password">Password</label>
+        <input id="password" type="password" formControlName="password" />
+        <div *ngIf="submitted && f['password'].errors">
+          <small *ngIf="f['password'].errors['required']">Password is required.</small>
+          <small *ngIf="f['password'].errors['minlength']">Password must be at least 6 characters long.</small>
+        </div>
+      </div>
+  
+      <div>
+        <label for="confirmPassword">Confirm Password</label>
+        <input id="confirmPassword" type="password" formControlName="confirmPassword" />
+        <div *ngIf="submitted &&f['confirmPassword'].errors">
+          <small *ngIf="f['confirmPassword'].errors['required']">Confirm password is required.</small>
+          <small *ngIf="f['confirmPassword'].errors['mismatch']">Passwords do not match.</small>
+        </div>
+      </div>
+  
+      <button type="submit">Register</button>
+    </form>
+  
+    <div *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<nav class="p-4 flex items-center justify-between border">
+    <a routerLink="/home">
+        <h1 class="text-xl text-center font-bold">
+            <span class="text-blue-500"><span class="text-4xl">B</span>udgetify</span>
+        </h1>
+    </a>
+
+    <div class="flex items-center gap-4">
+        @if(user) {
+            <p class="font-medium">Hello, {{user.email}}</p>
+            <p-button (onClick)="logout()" severity="danger" routerLink="/login" label="Logout"></p-button>
+        }@else {
+            <p-button severity="contrast" routerLink="/login" label="Login"></p-button>
+            <p-button severity="contrast" routerLink="/register" label="Register"></p-button>
+        }
+
+        
+    </div>
+
+</nav>

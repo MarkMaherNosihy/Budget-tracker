@@ -1,0 +1,78 @@
+<div>
+    <h1 class="text-2xl font-bold mb-8">Dashboard</h1>
+</div>
+<div class="grid grid-cols-3 mb-4">
+    <div class="flex col-span-1 border p-8 items-center">
+        <h1 class="text-xl">Total Income: </h1>
+        <h1 class="font-bold ml-2 text-xl">{{totalIncome}} EGP</h1>
+    </div>
+    <div class="flex col-span-1 border p-8 items-center">
+        <h1 class="text-xl">Total Expenses: </h1>
+        <h1 class="font-bold ml-2 text-xl">{{totalExpenses}} EGP</h1>
+    </div>
+    <div class="flex col-span-1 border p-8 items-center relative">
+        <h1 class="text-xl">Balance: </h1>
+        <div class="flex flex-col items-center">
+            <h1 class="font-bold ml-2 text-xl" [ngClass]="{'text-red-500': balance < 0}">{{balance}} EGP</h1>
+        </div>
+        @if(balance < 0){
+            <div class="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-md">
+                <p class="text-sm">You have exceeded your income</p>
+            </div>
+        }
+
+    </div>
+
+</div>
+<div class="grid grid-cols-7 gap-4 ">
+<div class="col-span-2 rounded-md py-8 border shadow-md">
+    <app-income-chart></app-income-chart>
+</div>
+<div class="col-span-3  rounded-md border shadow-md py-8">
+    <app-expense-chart></app-expense-chart>
+</div>
+<div class="col-span-2 rounded-md border shadow-md py-8 px-4">
+    <h1 class="font-bold mb-2 text-xl border-b pb-2">Goals Progress</h1>
+    <div class="flex flex-col gap-2">
+        @for (item of goals; track $index) 
+        {
+            <div class="border-b pb-4">
+                <div class="flex gap-2 mb-2">
+                    <h2 class="font-bold">{{item.title}}</h2>
+                    <p-badge [value]="item.amount + ' EGP'" severity="info"></p-badge>
+                </div>
+                <p-progress-bar [value]="item.progress"></p-progress-bar>
+            </div>
+
+        }
+    </div>
+</div>
+<div class="col-span-3 rounded-md p-4 border shadow-md">
+    <app-budget-variance></app-budget-variance>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-2 md:grid-cols-2 mt-4">
+    @for (budget of budgets; track $index) {
+        <p-card  styleClass="p-card-shadow col-span-3 border">
+            <div class="flex justify-between w-full p-2 items-center">
+                <h1 class="text-xl font-bold">{{budget.title}}</h1>
+                <p-badge [value]="budget.amount + ' EGP'" severity="warn"></p-badge>
+            </div>
+            <div class="flex justify-between w-full text-gray-400 items-center mb-2">
+                <h1 class="text-xs font-bold">{{categoryExpenses[budget.category.name] }} EGP Spent</h1>
+                <div class="flex gap-2 items-center">
+                    <h1 class="text-xs font-bold">{{ check(budget.amount - categoryExpenses[budget.category.name]) }} EGP Remaining</h1>
+                    @if(budget.amount - categoryExpenses[budget.category.name] < 0) {
+                        <p-badge [value]="budget.amount - categoryExpenses[budget.category.name] + 'EGP Exceeded'" severity="danger"></p-badge>
+                    }
+                </div>
+                
+            </div>
+            <p-progressBar [value]="categoryExpenses[budget.category.name] && budget.amount 
+            ? round((categoryExpenses[budget.category.name] / budget.amount) * 100 )
+            : 0" styleClass="p-progress-sm" color="#05bbe8"></p-progressBar>
+
+        </p-card>   
+    }
+ 
+</div>

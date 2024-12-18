@@ -1,0 +1,38 @@
+<div class="flex flex-col gap-4">
+    <p-button routerLink="create" label="+ Goal">
+
+    </p-button>
+    <p-table [value]="goals ?? []"  
+    [loading]="goals === null"
+    [tableStyle]="{ 'min-width': '50rem' }" class="border shadow">
+        <ng-template #header>
+            <tr>
+                <th>Title</th>
+                <th>Goal Amount</th>
+
+                <th>Progress</th>
+                <th>Actions</th>
+            </tr>
+        </ng-template>
+
+        <ng-template #body let-goal>
+                <tr>
+                    <td>{{  goal.title}} </td>
+                    <td>{{ goal.amount }} EGP</td>
+                    
+                    <td><p-progress-bar [value]="goal.progress"/> </td>
+                    <td class="flex gap-4">
+                        <p-button icon="pi pi-trash" label="Delete" severity="danger" [outlined]="true"  (onClick)="confirmDelete($event, goal.docId)"></p-button>
+                        <p-button icon="pi pi-pencil" label="Edit" severity="contrast" [routerLink]="'/goals/edit/'+goal.docId" ></p-button>
+                    </td>   
+                 </tr>
+        </ng-template>
+        
+    </p-table>
+    
+</div>
+
+
+<p-confirmdialog/>
+<p-toast />
+

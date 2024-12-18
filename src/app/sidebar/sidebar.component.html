@@ -1,0 +1,12 @@
+<div class="border p-4 rounded-md h-full flex flex-col gap-2 sticky">
+    <p-button  icon="pi pi-table" [text]="true" label="Dashboard" [severity]="router.isActive('/dashboard', true) ? 'info' : 'contrast' "  routerLink="/dashboard" styleClass="w-full !flex !justify-start" >
+    </p-button>
+    <p-button styleClass="text-left" [text]="true"  icon="pi pi-money-bill" label="Budgets" [severity]="router.isActive('/budgets', true) ? 'info' : 'contrast' "  routerLink="/budgets" styleClass="w-full  !flex !justify-start"  >
+    </p-button>
+    <p-button  [text]="true"  icon="pi pi-pound" label="Income" [severity]="router.isActive('/income', true) ? 'info' : 'contrast' "  routerLink="/income" styleClass="w-full  !flex !justify-start">
+    </p-button>
+    <p-button styleClass="text-left" [text]="true"  icon="pi pi-wallet" label="Expenses" [severity]="router.isActive('/expenses', true) ? 'info' : 'contrast' "  routerLink="/expenses" styleClass="w-full  !flex !justify-start"  >
+    </p-button>
+    <p-button styleClass="text-left" [text]="true"  icon="pi pi-bullseye" label="Goals" [severity]="router.isActive('/goals', true) ? 'info' : 'contrast' "  routerLink="/goals" styleClass="w-full  !flex !justify-start"  >
+    </p-button>
+</div>
