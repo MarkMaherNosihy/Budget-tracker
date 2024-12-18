@@ -26,6 +26,7 @@ export class BudgetUpsertComponent implements OnDestroy {
 
     budgetForm!: FormGroup;
     budgetService = inject(BudgetsService);
+    messageService = inject(MessageService);
     router = inject(Router);
     route = inject(ActivatedRoute)
     categories:BudgetCategory[] = [];
@@ -44,6 +45,7 @@ export class BudgetUpsertComponent implements OnDestroy {
     }
   
     ngOnInit(): void {
+
       this.catSubscription =   this.budgetService.getCategories().subscribe((categories: BudgetCategory[]) => {
         this.categories = categories;
       });
@@ -52,7 +54,6 @@ export class BudgetUpsertComponent implements OnDestroy {
 
       this.route.paramMap.subscribe(params => {
         this.budgetId = params.get('id');
-        
         if (this.budgetId) {
           this.isEditMode = true;
           this.loadBudget();
@@ -76,10 +77,13 @@ export class BudgetUpsertComponent implements OnDestroy {
   
       if (this.budgetForm.valid) {
         if (this.isEditMode && this.budgetId) {
-             this.budgetService.updateBudget(this.budgetId, this.budgetForm.value).then(()=>{
+             this.budgetService.updateBudget(this.budgetId, this.budgetForm.value)
+             .then(()=>{
             this.router.navigate(['/budgets']);
+
           }).catch((error)=>{
             console.error(error);
+
           });
   
         }else{          

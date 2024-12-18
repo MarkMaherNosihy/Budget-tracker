@@ -22,7 +22,7 @@
                     <td class="flex gap-4">
                         <!-- <p-button label="Edit" (onClick)="showDialog(income)"></p-button> -->
                         <p-button icon="pi pi-trash" label="Delete" severity="danger" [outlined]="true"  (onClick)="confirmDelete($event, budget.id)"></p-button>
-                        <p-button icon="pi pi-pencil" label="Edit" severity="contrast" [routerLink]="'/budgets/edit/'+budget.id" ></p-button>
+                        <p-button icon="pi pi-pencil" label="Edit" severity="contrast" [routerLink]="'/budgets/edit/'+budget.id"></p-button>
                     </td>
                  </tr>
         </ng-template>

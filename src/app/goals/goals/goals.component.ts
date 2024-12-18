@@ -29,40 +29,25 @@ export class GoalsComponent implements OnInit {
   goals$: Observable<GoalsResponse[]> = this.goalService.getGoals();
   goals: GoalsResponse[] = [];
   budget! : number;
-  isEdit = false;
-  editGoal!: GoalsResponse;
   constructor(private confirmationService: ConfirmationService, private messageService: MessageService) {}
-
-  visible = false;
   checkedGoalsIds:string[] = [];
+  
   ngOnInit(): void {
     this.budgetService.getBudget()
     .pipe(
       switchMap(budget => {
-        console.log("Budget Loaded:", budget);
         this.budget = budget;
         return this.goals$; 
       })
     )
     .subscribe(goals => {
       this.goals = goals;
-      console.log("Goals Loaded:", this.goals);
       this.precomputeProgress(); 
     });
 
   }
-  showDialog() {
-    this.visible = true;
-}
-  handleChange(val: boolean){
-    this.visible = val;
-  }
 
-  openEditIncome(expense: GoalsResponse) {
-    this.isEdit = true;
-    this.editGoal = expense;
-    this.showDialog();
-  }
+
   confirmDelete(event: Event, docId: string) {
     this.confirmationService.confirm({
         target: event.target as EventTarget,
@@ -113,7 +98,7 @@ export class GoalsComponent implements OnInit {
 
 
   checkGoal(goal: GoalsResponse) {
-    return this.checkedGoalsIds.includes(goal.docId);
+    return this.checkedGoalsIds.includes(goal.docId); //12000 - 8000 = 4000
   }
 
   precomputeProgress() {

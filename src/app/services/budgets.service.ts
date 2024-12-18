@@ -19,6 +19,8 @@ export class BudgetsService {
     const budgetCollection = collection(this.firestore, 'budgets');
     return addDoc(budgetCollection, { ...budget, uid: this.authService.getCurrentUser()?.uid });
   }
+
+
   getBudgets() {
     const budgetCol = collection(this.firestore, 'budgets');
 
@@ -35,6 +37,7 @@ export class BudgetsService {
 
     return new Observable<Budget[]>(subscriber => {
       const unsubscribe = onSnapshot(budgetsQuery, async (snapshot) => {
+
         const budgets: Budget[] = [];
   
         // Loop through each budget document
@@ -75,7 +78,7 @@ export class BudgetsService {
       return combineLatest([this.getBudgets(), this.expenseService.getExpenses()]).pipe(
         map(([budgets, expenses]) => {
           const categoryTotals: { [categoryName: string]: number } = {};
-    
+          
           // Initialize totals for each budget category
           budgets.forEach(budget => {
             const categoryName = budget.category.name;
@@ -112,7 +115,7 @@ export class BudgetsService {
 
   updateBudget(budgetId: string, budgetData: Partial<Budget>): Promise<void> {
     // Remove the id and category object from the data to be updated
-    const { id, category, ...updateData } = budgetData;
+    const { id, ...updateData } = budgetData;
     
     // If there's a new category, we only want to store the category ID
     const dataToUpdate = {

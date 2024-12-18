@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -29,6 +29,7 @@ export class BudgetComponent {
     constructor(private confirmationService: ConfirmationService, private messageService: MessageService) {}
   
     visible = false;
+
     showDialog() {
       this.visible = true;
   }
@@ -36,9 +37,7 @@ export class BudgetComponent {
       this.visible = val;
     }
   
-    deleteBudget(docId: string) {
-      this.bugetService.deleteBudget(docId);
-    }
+
     openEditExpense(expense: Budget) {
       this.isEdit = true;
       this.editBudget = expense;
@@ -62,8 +61,9 @@ export class BudgetComponent {
           },
   
           accept: () => {
-              this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
-              this.deleteBudget(docId);
+            this.bugetService.deleteBudget(docId);
+
+            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
           },
           reject: () => {
               this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });

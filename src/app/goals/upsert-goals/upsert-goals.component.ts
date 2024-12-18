@@ -50,6 +50,7 @@ export class UpsertGoalsComponent {
 
   loadGoal() {
     if(this.goalId === null) return;
+
     this.goalsService.getGoalById(this.goalId).subscribe(goal => {
       if (goal) {
         this.goalsForm.patchValue(goal);
@@ -62,6 +63,7 @@ export class UpsertGoalsComponent {
     if(!this.isEditMode){
       this.goalsForm.controls['priority'].setValue(this.numberOfGoals + 1);
     }
+    
     if (this.goalsForm.valid) {
       if (this.isEditMode && this.goalId) {
          this.goalsService.updateGoal(this.goalId, this.goalsForm.value).then(()=>{
