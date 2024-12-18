@@ -12,6 +12,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { BudgetCategory } from '../../types/budget';
 import { SelectModule } from 'primeng/select';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-budget-upsert',
@@ -29,9 +30,9 @@ export class BudgetUpsertComponent implements OnDestroy {
     route = inject(ActivatedRoute)
     categories:BudgetCategory[] = [];
     isEditMode = false;
-    catSubscription: any;
-    budgetSubscription: any;
-    updateBudgetSubscription: any;
+    catSubscription!: Subscription;
+    budgetSubscription!: Subscription;
+    updateBudgetSubscription!: Subscription;
     budgetId: string | null = null;
   
     constructor(private fb: FormBuilder) {
@@ -75,7 +76,7 @@ export class BudgetUpsertComponent implements OnDestroy {
   
       if (this.budgetForm.valid) {
         if (this.isEditMode && this.budgetId) {
-          this.updateBudgetSubscription = this.budgetService.updateBudget(this.budgetId, this.budgetForm.value).then(()=>{
+             this.budgetService.updateBudget(this.budgetId, this.budgetForm.value).then(()=>{
             this.router.navigate(['/budgets']);
           }).catch((error)=>{
             console.error(error);
@@ -93,10 +94,27 @@ export class BudgetUpsertComponent implements OnDestroy {
         console.error('Form is invalid!');
       }
     }
+    isFieldInvalid(fieldName: string): boolean {
+      const field = this.budgetForm.get(fieldName);
+      return field ? (field.invalid && (field.dirty || field.touched)) : false;
+    }
+  
+    // Helper method to get error message
+    getErrorMessage(fieldName: string): string {
+      const control = this.budgetForm.get(fieldName);
+      if (control?.errors) {
+        if (control.errors['required']) return 'This field is required';
+        if (control.errors['minlength']) return 'Minimum length is 3 characters';
+        if (control.errors['min']) return 'Amount must be greater than 0';
+      }
+      return '';
+    }
+  
   
     ngOnDestroy(): void {
         this.catSubscription.unsubscribe();
-        this.budgetSubscription.unsubscribe();
-        this.updateBudgetSubscription.unsubscribe();
+        if(this.budgetId){
+          this.budgetSubscription.unsubscribe();
+        }
     }
 }

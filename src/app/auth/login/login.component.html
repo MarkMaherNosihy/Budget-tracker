@@ -1,30 +1,35 @@
 <div class="flex w-full h-full items-center justify-center">
+<div class="max-w-[500px] w-full shadow-md p-8 border">
+    <h2 class="font-bold text-4xl mb-8 text-center">Login</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col ">
+      <div class="mb-8">
+        <p-float-label >
+          <label for="email" class="font-medium">Email</label>
+          <input pInputText   id="email" type="email" class="w-full" formControlName="email" />
+        </p-float-label>
 
-<div class="login-container max-w-[500px] w-full">
-    <h2>Login</h2>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <div>
-        <label for="email">Email</label>
-        <input id="email" type="email" formControlName="email" />
         <div *ngIf="submitted && f['email'].errors">
-          <small *ngIf="f['email'].errors['required']">Email is required.</small>
-          <small *ngIf="f['email'].errors['email']">Invalid email format.</small>
+          <small *ngIf="f['email'].errors['required']" class="text-red-500">Email is required.</small>
+          <small *ngIf="f['email'].errors['email']" class="text-red-500">Invalid email format.</small>
         </div>
       </div>
   
-      <div>
-        <label for="password">Password</label>
-        <input id="password" type="password" formControlName="password" />
+      <div class="mb-8">
+        <p-float-label>
+          <label for="password">Password</label>
+          <input pInputText id="password" type="password" class="w-full" formControlName="password" />
+        </p-float-label>
+
         <div *ngIf="submitted && f['password'].errors">
-          <small *ngIf="f['password'].errors['required']">Password is required.</small>
-          <small *ngIf="f['password'].errors['minlength']">Password must be at least 6 characters long.</small>
+          <small *ngIf="f['password'].errors['required']" class="text-red-500">Password is required.</small>
+          <small *ngIf="f['password'].errors['minlength']" class="text-red-500">Password must be at least 6 characters long.</small>
         </div>
       </div>
   
-      <button type="submit">Login</button>
+      <p-button type="submit" variant="outlined" severity="contrast" class="font-bold" styleClass="w-full">Sign In</p-button>
     </form>
   
-    <div *ngIf="errorMessage" class="error-message">
+    <div *ngIf="errorMessage" class="text-red-500">
       {{ errorMessage }}
     </div>
   </div>

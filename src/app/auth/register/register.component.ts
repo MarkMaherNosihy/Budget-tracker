@@ -5,11 +5,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { addDoc, collection, collectionData, Firestore } from '@angular/fire/firestore';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { FloatLabel } from 'primeng/floatlabel';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, InputTextModule, ButtonModule, FloatLabel],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
